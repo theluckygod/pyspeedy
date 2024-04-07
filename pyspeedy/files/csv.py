@@ -7,10 +7,6 @@ from pyspeedy.files.file import File
 
 
 class CSV(File):
-    """
-    Concrete Products provide various implementations of the Product interface.
-    """
-
     @beartype
     def read(self, path: str, **kwargs) -> pd.DataFrame:
         logger.info(f"Reading CSV file from {path}")
