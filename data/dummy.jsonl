@@ -1,0 +1,2 @@
+{"name":"JohnDoe","age":30,"email":"johndoe@example.com","address":{"street":"123MainSt","city":"NewYork","state":"NY","zip":"10001"},"interests":["programming","reading","traveling"]}
+{"name":"JaneSmith","age":25,"email":"janesmith@example.com","address":{"street":"456ElmSt","city":"LosAngeles","state":"CA","zip":"90001"},"interests":["painting","music","hiking"]}

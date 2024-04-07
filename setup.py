@@ -11,5 +11,6 @@ setup(
     install_requires=[  # List any dependencies your package requires
         "pytest",
         "loguru",
+        "pandas",
     ],
 )
