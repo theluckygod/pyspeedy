@@ -9,5 +9,7 @@ setup(
     url="https://github.com/theluckygod/pyspeedy",
     packages=find_packages(),  # Automatically find all packages in the directory
     install_requires=[  # List any dependencies your package requires
+        "pytest",
+        "loguru",
     ],
 )
