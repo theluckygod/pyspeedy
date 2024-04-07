@@ -10,6 +10,7 @@ class FileFactory:
     _handlers = {
         "csv": CSV(),
         "json": JSON(),
+        "jsonl": JSONL(),
         "txt": TXT(),
     }
 

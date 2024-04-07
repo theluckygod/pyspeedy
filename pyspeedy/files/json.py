@@ -39,3 +39,36 @@ class JSON(File):
             json.dump(data, f, ensure_ascii=ensure_ascii, indent=indent, **kwargs)
 
         logger.info(f"JSON file written to {path}")
+
+
+class JSONL(JSON):
+    @beartype
+    def read(
+        self, path: str, format: Literal["dataframe", "list"] = "list", **kwargs
+    ) -> Union[pd.DataFrame, list[dict]]:
+        df: pd.DataFrame = super().read(path, format="dataframe", lines=True, **kwargs)
+
+        if format == "list":
+            return df.to_dict("records")
+
+        return df
+
+    @beartype
+    def write(
+        self,
+        data: Union[pd.DataFrame, dict, list[dict]],
+        path: str,
+        encoding: str = "utf-8",
+        ensure_ascii: bool = False,
+        **kwargs,
+    ) -> None:
+        logger.info(f"Writing JSONL file to {path}")
+        if isinstance(data, pd.DataFrame):
+            data = data.to_dict("records")
+
+        with open(path, "w", encoding=encoding) as f:
+            for entry in data:
+                json.dump(entry, f, ensure_ascii=ensure_ascii, indent=None, **kwargs)
+                f.write("\n")
+
+        logger.info(f"JSONL file written to {path}")
