@@ -1,5 +1,4 @@
-from pyspeedy.files.file import File
-from pyspeedy.files.csv import CSV
+from pyspeedy.files import *
 
 
 class FileFactory:
@@ -8,12 +7,18 @@ class FileFactory:
     different abstract files.
     """
 
+    _handlers = {
+        "csv": CSV(),
+        "json": JSON(),
+    }
+
     def create(self, ext: str) -> File:
         """
         The Abstract Factory interface declares a set of methods that return
         different abstract files.
         """
-        if ext == "csv":
-            return CSV()
+        handler = self._handlers.get(ext, None)
+        if not handler:
+            raise ValueError(f"Unknown file extension: {ext}")
 
-        raise ValueError(f"Unknown file extension: {ext}")
+        return handler

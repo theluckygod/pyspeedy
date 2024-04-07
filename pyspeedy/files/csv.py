@@ -10,7 +10,7 @@ class CSV(File):
     @beartype
     def read(self, path: str, **kwargs) -> pd.DataFrame:
         logger.info(f"Reading CSV file from {path}")
-        df = pd.read_csv(path, **kwargs)
+        df: pd.DataFrame = pd.read_csv(path, **kwargs)
         logger.info(f"CSV file read from {path}")
         return df
 
