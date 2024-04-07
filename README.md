@@ -38,5 +38,7 @@ class MySingleton(metaclass=SingletonMeta):
 ```
 
 ## Installation
-```$ pip install git+https://github.com/theluckygod/pyspeedy.git```
+```bash
+$ pip install git+https://github.com/theluckygod/pyspeedy.git
+```
 
