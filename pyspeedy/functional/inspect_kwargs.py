@@ -1,5 +1,5 @@
-import inspect
 import functools
+import inspect
 
 from beartype import beartype
 from beartype.typing import Callable

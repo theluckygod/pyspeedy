@@ -1,11 +1,12 @@
 import json
+
 import pandas as pd
 from beartype import beartype
-from beartype.typing import Union, Literal
+from beartype.typing import Literal, Union
 from loguru import logger
 
-from pyspeedy.functional.inspect_kwargs import ignore_unmatched_kwargs
 from pyspeedy.files.file import File
+from pyspeedy.functional.inspect_kwargs import ignore_unmatched_kwargs
 
 
 class JSON(File):

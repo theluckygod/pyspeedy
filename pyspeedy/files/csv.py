@@ -1,10 +1,11 @@
 import csv
+
 import pandas as pd
 from beartype import beartype
 from loguru import logger
 
-from pyspeedy.functional.inspect_kwargs import ignore_unmatched_kwargs
 from pyspeedy.files.file import File
+from pyspeedy.functional.inspect_kwargs import ignore_unmatched_kwargs
 
 
 class CSV(File):
