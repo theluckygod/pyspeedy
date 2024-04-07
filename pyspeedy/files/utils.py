@@ -91,7 +91,7 @@ def write_by_ext(
     fname: str,
     to_makedir: bool = True,
     to_overwrite: bool = False,
-    to_add_tag_date: bool = False,
+    to_add_date_tag: bool = False,
     tag_date_format: str = "_v%y.%m.%d",
     tz: str = "Asia/Ho_Chi_Minh",
     **kwargs,
@@ -103,9 +103,9 @@ def write_by_ext(
         fname (str): The name of the file to be written.
         to_makedir (bool): If True, creates the folder if it does not exist. Default is True.
         to_overwrite (bool): If True, overwrites the file if it already exists. Default is False.
-        to_add_tag_date (bool): If True, adds the current date to the file name. Default is False.
-        tag_date_format (str): The format of the date tag. Default is "_v%y.%m.%d". Only used if to_add_tag_date is True.
-        tz (str): The time zone to be used. Default is "Asia/Ho_Chi_Minh". Only used if to_add_tag_date is True.
+        to_add_date_tag (bool): If True, adds the current date to the file name. Default is False.
+        tag_date_format (str): The format of the date tag. Default is "_v%y.%m.%d". Only used if to_add_date_tag is True.
+        tz (str): The time zone to be used. Default is "Asia/Ho_Chi_Minh". Only used if to_add_date_tag is True.
         **kwargs: Additional keyword arguments.
 
     Returns:
@@ -124,7 +124,7 @@ def write_by_ext(
             raise FileNotFoundError(f"Folder {folder} not found.")
         os.makedirs(folder, exist_ok=True)
 
-    if to_add_tag_date:
+    if to_add_date_tag:
         tag_date = datetime.datetime.now(tz=dateutil.tz.gettz(tz)).strftime(
             tag_date_format
         )
