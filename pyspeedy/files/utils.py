@@ -6,6 +6,7 @@ import dateutil
 import pandas as pd
 from beartype import beartype
 from beartype.typing import Any, Union
+from loguru import logger
 
 from pyspeedy.files.file import File
 from pyspeedy.files.file_factory import FileFactory
@@ -122,6 +123,7 @@ def write_by_ext(
     if not os.path.exists(folder):
         if not to_makedir:
             raise FileNotFoundError(f"Folder {folder} not found.")
+        logger.warning(f"Folder {folder} not found. Creating...")
         os.makedirs(folder, exist_ok=True)
 
     if to_add_date_tag:
@@ -130,8 +132,12 @@ def write_by_ext(
         )
         fname = f"{fname[: -len(ext) - 1]}{tag_date}.{ext}"
 
-    if os.path.exists(fname) and not to_overwrite:
-        raise FileExistsError(f"File {fname} already exists.")
+    if os.path.exists(fname):
+        if not to_overwrite:
+            raise FileExistsError(
+                f"File {fname} already exists. Use 'to_overwrite=True' to overwrite it."
+            )
+        logger.warning(f"Overwriting {fname}...")
 
     f: File = FileFactory().create(ext=ext)
     f.write(data=data, path=fname, **kwargs)
