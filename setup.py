@@ -12,5 +12,7 @@ setup(
         "pytest",
         "loguru",
         "pandas",
+        "beartype",
+        "python-dateutil",
     ],
 )
