@@ -2,6 +2,8 @@ import pandas as pd
 
 from pyspeedy.files import *
 
+DATA_FOLDER = "data/*"
+
 CSV_DUMMY_PATH = "data/dummy.csv"
 JSON_DUMMY_PATH = "data/dummy.json"
 JSONL_DUMMY_PATH = "data/dummy.jsonl"
@@ -68,3 +70,12 @@ def test_load_file_by_ext():
     # Test TXT
     data = load_file_by_ext(TXT_DUMMY_PATH)
     assert isinstance(data, list)
+
+
+def test_load_by_ext():
+    data = load_by_ext(DATA_FOLDER)
+    assert (
+        isinstance(data, list)
+        or isinstance(data, dict)
+        or isinstance(data, pd.DataFrame)
+    )

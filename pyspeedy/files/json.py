@@ -4,6 +4,7 @@ from beartype import beartype
 from beartype.typing import Union, Literal
 from loguru import logger
 
+from pyspeedy.functional.inspect_kwargs import ignore_unmatched_kwargs
 from pyspeedy.files.file import File
 
 
@@ -13,7 +14,7 @@ class JSON(File):
         self, path: str, format: Literal["dataframe", "dict"] = "dict", **kwargs
     ) -> Union[pd.DataFrame, dict, list[dict]]:
         logger.info(f"Reading JSON file from {path}")
-        df: pd.DataFrame = pd.read_json(path, **kwargs)
+        df: pd.DataFrame = ignore_unmatched_kwargs(pd.read_json)(path, **kwargs)
         logger.info(f"JSON file read from {path}")
 
         if format == "dict":
