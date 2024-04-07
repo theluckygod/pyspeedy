@@ -10,6 +10,7 @@ class FileFactory:
     _handlers = {
         "csv": CSV(),
         "json": JSON(),
+        "txt": TXT(),
     }
 
     def create(self, ext: str) -> File:
