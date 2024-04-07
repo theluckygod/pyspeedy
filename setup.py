@@ -2,6 +2,7 @@ from setuptools import find_packages, setup
 
 setup(
     name="pyspeedy",
+    python_requires=">=3.7",
     version="0.1.0",
     description="Fast and easy-to-use package for python developers.",
     author="theluckygod",
