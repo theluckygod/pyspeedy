@@ -79,3 +79,25 @@ def test_load_by_ext():
         or isinstance(data, dict)
         or isinstance(data, pd.DataFrame)
     )
+
+
+def test_write_by_ext():
+    data = load_file_by_ext(CSV_DUMMY_PATH)
+    path = "outputs/test_dummy.csv"
+    written_path = write_by_ext(data, path, to_overwrite=True)
+    assert os.path.exists(written_path) and written_path == path
+
+    data = load_file_by_ext(JSON_DUMMY_PATH)
+    path = "outputs/test_dummy.json"
+    written_path = write_by_ext(data, path, to_overwrite=True)
+    assert os.path.exists(written_path) and written_path == path
+
+    data = load_file_by_ext(JSONL_DUMMY_PATH)
+    path = "outputs/test_dummy.jsonl"
+    written_path = write_by_ext(data, path, to_overwrite=True)
+    assert os.path.exists(written_path) and written_path == path
+
+    data = load_file_by_ext(TXT_DUMMY_PATH)
+    path = "outputs/test_dummy.txt"
+    written_path = write_by_ext(data, path, to_overwrite=True)
+    assert os.path.exists(written_path) and written_path == path

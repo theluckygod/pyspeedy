@@ -1,9 +1,11 @@
+import datetime
 import os
 from glob import glob
+
+import dateutil
+import pandas as pd
 from beartype import beartype
 from beartype.typing import Any, Union
-
-import pandas as pd
 
 from pyspeedy.files.file import File
 from pyspeedy.files.file_factory import FileFactory
@@ -81,3 +83,57 @@ def load_by_ext(fname: Union[str, list], try_to_merge: bool = False, **kwargs) -
                 return pd.concat(files, axis=0, ignore_index=True, sort=False)
 
         return {f: file for f, file in zip(fname, files)}
+
+
+@beartype
+def write_by_ext(
+    data: Union[pd.DataFrame, list, dict],
+    fname: str,
+    to_makedir: bool = True,
+    to_overwrite: bool = False,
+    to_add_tag_date: bool = False,
+    tag_date_format: str = "_v%y.%m.%d",
+    tz: str = "Asia/Ho_Chi_Minh",
+    **kwargs,
+) -> str:
+    """Writes data to a file based on its extension.
+
+    Args:
+        data (Union[pd.DataFrame, list, dict]): The data to be written.
+        fname (str): The name of the file to be written.
+        to_makedir (bool): If True, creates the folder if it does not exist. Default is True.
+        to_overwrite (bool): If True, overwrites the file if it already exists. Default is False.
+        to_add_tag_date (bool): If True, adds the current date to the file name. Default is False.
+        tag_date_format (str): The format of the date tag. Default is "_v%y.%m.%d". Only used if to_add_tag_date is True.
+        tz (str): The time zone to be used. Default is "Asia/Ho_Chi_Minh". Only used if to_add_tag_date is True.
+        **kwargs: Additional keyword arguments.
+
+    Returns:
+        str: The path of the written file.
+    """
+
+    folder = os.path.dirname(fname)
+
+    try:
+        ext: str = fname.split(".")[-1]
+    except IndexError:
+        raise ValueError(f"File {fname} does not have an extension.")
+
+    if not os.path.exists(folder):
+        if not to_makedir:
+            raise FileNotFoundError(f"Folder {folder} not found.")
+        os.makedirs(folder, exist_ok=True)
+
+    if to_add_tag_date:
+        tag_date = datetime.datetime.now(tz=dateutil.tz.gettz(tz)).strftime(
+            tag_date_format
+        )
+        fname = f"{fname[: -len(ext) - 1]}{tag_date}.{ext}"
+
+    if os.path.exists(fname) and not to_overwrite:
+        raise FileExistsError(f"File {fname} already exists.")
+
+    f: File = FileFactory().create(ext=ext)
+    f.write(data=data, path=fname, **kwargs)
+
+    return fname

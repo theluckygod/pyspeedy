@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from beartype.typing import Any
 
 
 class File(ABC):
@@ -12,5 +13,5 @@ class File(ABC):
         pass
 
     @abstractmethod
-    def write(self, path: str) -> None:
+    def write(self, data: Any, path: str) -> None:
         pass
