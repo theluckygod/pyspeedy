@@ -1,0 +1,62 @@
+COMMAND_WORDS = [
+    "hãy mở bài hát",
+    "mở bài hát có lời",
+    "mở bài có lời",
+    "mở nhạc có lời",
+    "bài hát có lời",
+    "bài có lời",
+    "nhạc có lời",
+    "cho tôi bản nhạc",
+    "cho tôi bài nhạc",
+    "cho tôi bài",
+    "tôi muốn nghe bài",
+    "nghe bài nhạc",
+    "nghe bài hát",
+    "cho tôi nghe bài nhạc",
+    "cho tôi nghe bài",
+    "cho tôi nghe",
+    "tôi muốn mở bài hát",
+    "tôi muốn mở",
+    "tôi muốn bật",
+    "cho anh bản nhạc",
+    "cho anh bài nhạc",
+    "cho anh bài",
+    "anh muốn nghe bài",
+    "cho anh nghe bài nhạc",
+    "cho anh nghe bài",
+    "cho anh nghe",
+    "anh muốn mở bài hát",
+    "anh muốn mở",
+    "anh muốn bật",
+    "cho em bản nhạc",
+    "cho em bài nhạc",
+    "cho em bài",
+    "em muốn nghe bài",
+    "cho em nghe bài nhạc",
+    "cho em nghe bài",
+    "cho em nghe",
+    "em muốn mở bài hát",
+    "em muốn mở",
+    "em muốn bật",
+    "hát bài nhạc",
+    "mở bài hát",
+    "mở bài",
+    "tra bài",
+    "bài hát",
+    "bài nhạc",
+    "ca nhạc",
+    "mở",
+    "bật",
+    "nghe nhạc",
+    "tải nhạc",
+    "tôi muốn nghe nhạc",
+]
+COMMAND_WORDS = sorted(COMMAND_WORDS, key=lambda x: len(x.split(" ")), reverse=True)
+
+
+def normalize_question(ques):
+    for word in COMMAND_WORDS:
+        if ques.startswith(word):
+            ques = ques[len(word) :].lstrip()
+
+    return ques
