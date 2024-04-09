@@ -19,10 +19,23 @@ write_by_ext(df, "outputs/merged.csv", to_add_date_tag=True)
 # write to "outputs/merged_v24.04.01.csv"
 ```
 
-### VSCode utils
+### Text utils
 ```python
+from pyspeedy.text import *
+teen_code_decode("a k còn yêu e nữa phải k")
+#> "anh không còn yêu em nữa phải không"
+```
+
+### VSCode utils
+```bash
 # dump the well-configured vscode settings to current directory
-from pyspeedy.vscode import *; dump_settings() 
+python -c "from pyspeedy.vscode import *; dump_settings()"
+```
+
+### Pytest utils
+```bash
+# dump the template of pytest to current directory
+python -c "from pyspeedy.pytest import *; dump_template()"
 ```
 
 ### Design Patterns
