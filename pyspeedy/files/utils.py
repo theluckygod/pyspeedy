@@ -66,7 +66,8 @@ def load_by_ext(fname: Union[str, list], try_to_merge: bool = False, **kwargs) -
     if isinstance(fname, str):
         if "*" in fname:
             files = glob(fname)
-            return load_by_ext(fname=files, **kwargs)
+            logger.info(f"Found {len(files)} files in {fname}. Loading...")
+            return load_by_ext(fname=files, try_to_merge=try_to_merge, **kwargs)
 
         return load_file_by_ext(fname=fname, **kwargs)
 
@@ -77,11 +78,16 @@ def load_by_ext(fname: Union[str, list], try_to_merge: bool = False, **kwargs) -
             assert mergeable(files), "Files are not mergeable."
 
             if all([isinstance(f, dict) for f in files]):
+                logger.info("Merging all files into a single dictionary.")
                 return {k: v for f in files for k, v in f.items()}
             elif all([isinstance(f, list) for f in files]):
+                logger.info("Merging all files into a single list.")
                 return [item for sublist in files for item in sublist]
             elif all([isinstance(f, pd.DataFrame) for f in files]):
+                logger.info("Merging all files into a single DataFrame.")
                 return pd.concat(files, axis=0, ignore_index=True, sort=False)
+            else:
+                raise ValueError("Files are not mergeable.")
 
         return {f: file for f, file in zip(fname, files)}
 
