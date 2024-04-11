@@ -15,5 +15,6 @@ setup(
         "pandas",
         "beartype",
         "python-dateutil",
+        "IPython",
     ],
 )
