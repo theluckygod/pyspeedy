@@ -2,7 +2,7 @@ import json
 
 import pandas as pd
 from beartype import beartype
-from beartype.typing import Literal, Union
+from beartype.typing import Dict, List, Literal, Union
 from loguru import logger
 
 from pyspeedy.files.file import File
@@ -13,7 +13,7 @@ class JSON(File):
     @beartype
     def read(
         self, path: str, format: Literal["dataframe", "dict"] = "dict", **kwargs
-    ) -> Union[pd.DataFrame, dict, list[dict]]:
+    ) -> Union[pd.DataFrame, Dict, List[Dict]]:
         logger.info(f"Reading JSON file from {path}")
         df: pd.DataFrame = ignore_unmatched_kwargs(pd.read_json)(path, **kwargs)
         logger.info(f"JSON file read from {path}")
@@ -26,7 +26,7 @@ class JSON(File):
     @beartype
     def write(
         self,
-        data: Union[pd.DataFrame, dict, list[dict]],
+        data: Union[pd.DataFrame, Dict, List[Dict]],
         path: str,
         encoding: str = "utf-8",
         ensure_ascii: bool = False,
@@ -47,7 +47,7 @@ class JSONL(JSON):
     @beartype
     def read(
         self, path: str, format: Literal["dataframe", "list"] = "list", **kwargs
-    ) -> Union[pd.DataFrame, list[dict]]:
+    ) -> Union[pd.DataFrame, List[Dict]]:
         df: pd.DataFrame = super().read(path, format="dataframe", lines=True, **kwargs)
 
         if format == "list":
@@ -58,7 +58,7 @@ class JSONL(JSON):
     @beartype
     def write(
         self,
-        data: Union[pd.DataFrame, dict, list[dict]],
+        data: Union[pd.DataFrame, Dict, List[Dict]],
         path: str,
         encoding: str = "utf-8",
         ensure_ascii: bool = False,

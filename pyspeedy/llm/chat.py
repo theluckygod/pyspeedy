@@ -1,11 +1,11 @@
 from __future__ import annotations
 
-from beartype.typing import Literal
+from beartype.typing import List, Literal
 from pydantic import AliasChoices, BaseModel, Field
 
 
 class Chat(BaseModel):
-    messages: list[Message]
+    messages: List[Message]
 
 
 class Message(BaseModel):

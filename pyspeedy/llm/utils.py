@@ -1,5 +1,5 @@
 from beartype import beartype
-from beartype.typing import Union
+from beartype.typing import List, Union
 from IPython.core.display import HTML
 
 import pyspeedy.llm.constants as constants
@@ -39,14 +39,14 @@ def _get_message_html(message: Message) -> str:
 
 
 @beartype
-def get_chat_html(chat_or_messages: Union[Chat, list[dict]]) -> HTML:
+def get_chat_html(chat_or_messages: Union[Chat, List[dict]]) -> HTML:
     if isinstance(chat_or_messages, Chat):
         chat = chat_or_messages
     else:
         chat = Chat(messages=chat_or_messages)
 
-    messages: list[Message] = chat.messages
-    messages_html: list[str] = [_get_message_html(message) for message in messages]
+    messages: List[Message] = chat.messages
+    messages_html: List[str] = [_get_message_html(message) for message in messages]
     html: str = constants.format_chat_html_template.substitute(
         chats="".join(messages_html)
     )

@@ -1,6 +1,6 @@
 import pandas as pd
 from beartype import beartype
-from beartype.typing import Literal, Union
+from beartype.typing import List, Literal, Union
 from loguru import logger
 
 from pyspeedy.files import File
@@ -9,8 +9,8 @@ from pyspeedy.files import File
 class TXT(File):
     @beartype
     def read(
-        self, path: str, format: Literal["list, dataframe"] = "list", **kwargs
-    ) -> Union[pd.DataFrame, list]:
+        self, path: str, format: Literal["list", "dataframe"] = "list", **kwargs
+    ) -> Union[pd.DataFrame, List]:
         logger.info(f"Reading TXT file from {path}")
         df: pd.DataFrame = pd.read_fwf(path, names=["value"])
         logger.info(f"TXT file read from {path}")
@@ -23,7 +23,7 @@ class TXT(File):
     @beartype
     def write(
         self,
-        data: Union[pd.DataFrame, list[str]],
+        data: Union[pd.DataFrame, List[str]],
         path: str,
         encoding: str = "utf-8",
         newline: str = "\n",

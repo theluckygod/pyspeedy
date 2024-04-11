@@ -1,3 +1,4 @@
+from beartype.typing import Dict, List
 from IPython.core.display import HTML
 
 from pyspeedy.llm import *
@@ -23,7 +24,7 @@ def test_parse_message():
 
 def test_get_chat_html():
     # Test
-    messages: list[dict] = [
+    messages: List[Dict] = [
         {"from": "user", "value": "You are a bot."},
         {"from": "user", "value": "Hello!"},
         {"from": "assistant", "value": "Hi! How can I help you today?"},

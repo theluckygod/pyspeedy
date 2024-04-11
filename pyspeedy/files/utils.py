@@ -5,7 +5,7 @@ from glob import glob
 import dateutil
 import pandas as pd
 from beartype import beartype
-from beartype.typing import Any, Union
+from beartype.typing import Any, Dict, List, Union
 from loguru import logger
 
 from pyspeedy.files.file import File
@@ -36,7 +36,7 @@ def load_file_by_ext(fname: str, **kwargs) -> Any:
     return f.read(path=fname, **kwargs)
 
 
-def mergeable(files: list[any]) -> bool:
+def mergeable(files: List[any]) -> bool:
     return (
         all([isinstance(f, dict) for f in files])
         or all([isinstance(f, list) for f in files])
@@ -45,11 +45,11 @@ def mergeable(files: list[any]) -> bool:
 
 
 @beartype
-def load_by_ext(fname: Union[str, list], try_to_merge: bool = False, **kwargs) -> Any:
+def load_by_ext(fname: Union[str, List], try_to_merge: bool = False, **kwargs) -> Any:
     """Loads one or multiple files based on their extensions.
 
     Args:
-        fname (Union[str, list]): The name or list of names of the files to be loaded. If a list is given, all files in the list will be loaded.
+        fname (Union[str, List]): The name or list of names of the files to be loaded. If a list is given, all files in the list will be loaded.
         Examples:
             - ["file1.txt", "file2.txt"]
             - "file.txt"
@@ -94,7 +94,7 @@ def load_by_ext(fname: Union[str, list], try_to_merge: bool = False, **kwargs) -
 
 @beartype
 def write_by_ext(
-    data: Union[pd.DataFrame, list, dict],
+    data: Union[pd.DataFrame, List, Dict],
     fname: str,
     to_makedir: bool = True,
     to_overwrite: bool = False,

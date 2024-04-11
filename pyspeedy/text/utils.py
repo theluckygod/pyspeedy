@@ -1,10 +1,12 @@
 import re
 
+from beartype.typing import Dict
+
 import pyspeedy.text.constants as constants
 
 
 def teen_code_decode(
-    text: str, teen_code_dict: dict[str, str] = constants.TEEN_CODE_DICT
+    text: str, teen_code_dict: Dict[str, str] = constants.TEEN_CODE_DICT
 ) -> str:
     """Replace teen codes with formal ones
 
