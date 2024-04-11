@@ -1,3 +1,4 @@
+import markdown
 from beartype import beartype
 from beartype.typing import List, Union
 from IPython.core.display import HTML
@@ -27,7 +28,7 @@ def _get_system_chat_html(
 @beartype
 def _get_message_html(message: Message) -> str:
     content = message.value
-    content = content.replace("\n", "<br>")
+    content = markdown.markdown(content, extensions=["fenced_code"])
 
     role = message.from_
 
