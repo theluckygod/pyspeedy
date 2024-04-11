@@ -3,7 +3,7 @@ from beartype import beartype
 from beartype.typing import List, Literal, Union
 from loguru import logger
 
-from pyspeedy.files import File
+from pyspeedy.files.file import File
 
 
 class TXT(File):
