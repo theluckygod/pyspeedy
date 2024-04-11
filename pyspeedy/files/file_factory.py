@@ -1,4 +1,7 @@
-from pyspeedy.files import *
+from pyspeedy.files.csv import CSV
+from pyspeedy.files.file import File
+from pyspeedy.files.json import JSON, JSONL
+from pyspeedy.files.txt import TXT
 
 
 class FileFactory:
