@@ -27,10 +27,10 @@ def _get_system_chat_html(
 
 @beartype
 def _get_message_html(message: Message) -> str:
-    content = message.value
+    content = message.content
     content = markdown.markdown(content, extensions=["fenced_code"])
 
-    role = message.from_
+    role = message.role
 
     if role == "user":
         return _get_user_chat_html(content)
