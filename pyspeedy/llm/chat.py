@@ -8,16 +8,10 @@ class Chat(BaseModel):
     messages: List[Message]
 
     def to_huggingface_format(self) -> List[Dict]:
-        return [
-            {"role": message.role, "content": message.content}
-            for message in self.messages
-        ]
+        return list(map(lambda message: message.to_huggingface_format(), self.messages))
 
     def to_qwen_format(self) -> List[Dict]:
-        return [
-            {"from": message.role, "value": message.content}
-            for message in self.messages
-        ]
+        return list(map(lambda message: message.to_qwen_format(), self.messages))
 
 
 class Message(BaseModel):
@@ -25,3 +19,9 @@ class Message(BaseModel):
         validation_alias=AliasChoices("from", "role")
     )
     content: str = Field(validation_alias=AliasChoices("value", "content"))
+
+    def to_huggingface_format(self) -> Dict:
+        return {"role": self.role, "content": self.content}
+
+    def to_qwen_format(self) -> Dict:
+        return {"from": self.role, "value": self.content}

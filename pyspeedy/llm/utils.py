@@ -1,6 +1,6 @@
 import markdown
 from beartype import beartype
-from beartype.typing import List, Union
+from beartype.typing import Dict, List, Union
 from IPython.core.display import HTML
 
 import pyspeedy.llm.constants as constants
@@ -26,12 +26,12 @@ def _get_system_chat_html(
 
 
 @beartype
-def _get_message_html(message: Message) -> str:
+def _get_message_html(message: Message, use_markdown: bool) -> str:
     content = message.content
-    content = markdown.markdown(content, extensions=["fenced_code"])
+    if use_markdown:
+        content = markdown.markdown(content, extensions=["fenced_code"])
 
     role = message.role
-
     if role == "user":
         return _get_user_chat_html(content)
     if role == "assistant":
@@ -40,14 +40,28 @@ def _get_message_html(message: Message) -> str:
 
 
 @beartype
-def get_chat_html(chat_or_messages: Union[Chat, List[dict]]) -> HTML:
+def get_chat_html(
+    chat_or_messages: Union[Chat, List[Dict]], use_markdown: bool = True
+) -> HTML:
+    """Get the HTML representation of a chat.
+
+    Args:
+        chat_or_messages (Union[Chat, List[Dict]]): A Chat object or a list of messages.
+        use_markdown (bool, optional): Whether to use markdown for the messages. Defaults to True.
+
+    Returns:
+        HTML: The HTML representation of the chat.
+    """
+
     if isinstance(chat_or_messages, Chat):
         chat = chat_or_messages
     else:
         chat = Chat(messages=chat_or_messages)
 
     messages: List[Message] = chat.messages
-    messages_html: List[str] = [_get_message_html(message) for message in messages]
+    messages_html: List[str] = [
+        _get_message_html(message, use_markdown) for message in messages
+    ]
     html: str = constants.format_chat_html_template.substitute(
         chats="".join(messages_html)
     )

@@ -16,5 +16,6 @@ setup(
         "beartype",
         "python-dateutil",
         "IPython",
+        "markdown",
     ],
 )
