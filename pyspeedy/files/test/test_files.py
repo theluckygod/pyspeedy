@@ -1,8 +1,8 @@
 import pandas as pd
 
-from pyspeedy.files.csv import CSV
-from pyspeedy.files.json import JSON, JSONL
-from pyspeedy.files.txt import TXT
+from pyspeedy.files.file_concrete.csv import CSV
+from pyspeedy.files.file_concrete.json import JSON, JSONL
+from pyspeedy.files.file_concrete.txt import TXT
 from pyspeedy.files.utils import *
 
 DATA_FOLDER = "data/*"

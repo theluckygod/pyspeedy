@@ -5,7 +5,7 @@ from beartype import beartype
 from beartype.typing import Dict, List, Literal, Union
 from loguru import logger
 
-from pyspeedy.files.file import File
+from pyspeedy.files.file_concrete.file import File
 from pyspeedy.functional.inspect_kwargs import ignore_unmatched_kwargs
 
 
