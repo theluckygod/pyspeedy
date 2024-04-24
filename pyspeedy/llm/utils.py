@@ -30,6 +30,8 @@ def _get_message_html(message: Message, use_markdown: bool) -> str:
     content = message.content
     if use_markdown:
         content = markdown.markdown(content, extensions=["fenced_code"])
+    else:
+        content = "<p>" + content.replace("\n", "<br>") + "</p>"
 
     role = message.role
     if role == "user":
