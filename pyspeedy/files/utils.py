@@ -126,7 +126,7 @@ def write_by_ext(
     except IndexError:
         raise ValueError(f"File {fname} does not have an extension.")
 
-    if not os.path.exists(folder):
+    if folder and not os.path.exists(folder):
         if not to_makedir:
             raise FileNotFoundError(f"Folder {folder} not found.")
         logger.warning(f"Folder {folder} not found. Creating...")
