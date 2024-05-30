@@ -12,13 +12,16 @@ class TXT(File):
         self, path: str, format: Literal["list", "dataframe"] = "list", **kwargs
     ) -> Union[pd.DataFrame, List]:
         logger.info(f"Reading TXT file from {path}")
-        df: pd.DataFrame = pd.read_fwf(path, names=["value"])
+
+        with open(path, "r") as f:
+            lines = f.readlines()
+            lines = [line[:-1] for line in lines]
         logger.info(f"TXT file read from {path}")
 
         if format == "list":
-            return df.value.tolist()
+            return lines
 
-        return df
+        return pd.DataFrame(lines, columns=["value"])
 
     @beartype
     def write(
