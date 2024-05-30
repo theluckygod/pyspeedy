@@ -48,7 +48,12 @@ class JSONL(JSON):
     def read(
         self, path: str, format: Literal["dataframe", "list"] = "list", **kwargs
     ) -> Union[pd.DataFrame, List[Dict]]:
-        df: pd.DataFrame = super().read(path, format="dataframe", lines=True, **kwargs)
+        def load_jsonl(filename):
+            with open(filename) as fd:
+                for line in fd:
+                    yield json.loads(line)
+
+        df: pd.DataFrame = pd.DataFrame(load_jsonl(path))
 
         if format == "list":
             return df.to_dict("records")
