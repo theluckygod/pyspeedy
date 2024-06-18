@@ -18,4 +18,7 @@ setup(
         "IPython",
         "markdown",
     ],
+    extras_require={
+        "models": ["FlagEmbedding"],
+    },
 )
