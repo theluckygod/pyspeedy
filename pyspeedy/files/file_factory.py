@@ -15,6 +15,7 @@ class FileFactory:
         "json": JSON(),
         "jsonl": JSONL(),
         "txt": TXT(),
+        "log": TXT(),
     }
 
     def create(self, ext: str) -> File:
