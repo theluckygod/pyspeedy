@@ -3,8 +3,10 @@ from beartype.typing import Dict, List, Optional, Tuple, Union
 from loguru import logger
 from tqdm import tqdm
 
+from pyspeedy.models.config import config
 from pyspeedy.models.embedders.embedder import Embedder
 from pyspeedy.models.embedders.pretrain_embedder import PretrainEmbedder
+from pyspeedy.models.embedders.tei_embedder import TEIEmbedder
 
 
 def deduplicate_text(
@@ -13,6 +15,7 @@ def deduplicate_text(
     threshold: float = 0.8,
     batch_size: int = 16,
     return_duplication: bool = False,
+    disable_tqdm: bool = False,
 ) -> Union[List[str], Tuple[List[str], Dict]]:
     """Deduplicate a vocabulary.
 
@@ -25,9 +28,12 @@ def deduplicate_text(
     Returns:
         Return List[str] if return_duplication is False else Tuple[List[str], Dict]
     """
-
+    
     if embedder is None:
-        embedder = PretrainEmbedder()
+        if config.embedder_endpoint:
+            embedder = TEIEmbedder()
+        else:
+            embedder = PretrainEmbedder()
 
     df = pd.DataFrame(texts, columns=["text"])
     org_len = len(df)
@@ -40,6 +46,7 @@ def deduplicate_text(
         Embedder.Request(inputs=df.text.values.tolist()),
         return_format="np",
         batch_size=batch_size if len(df) > batch_size else 1,
+        disable_tqdm=disable_tqdm,
     ).embedding
     scores = embeddings @ embeddings.T
 
@@ -47,7 +54,7 @@ def deduplicate_text(
     logger.info(f"Deduplicating texts with threshold {threshold}")
     dup_ids = []
     dup_dict = {}
-    for idx, row in tqdm(df.iterrows(), total=len(df), desc="Processing", ncols=100):
+    for idx, row in tqdm(df.iterrows(), total=len(df), desc="Processing", ncols=100, disable=disable_tqdm):
         dup_df = df.loc[(df.index > idx) & (scores[idx, ...] >= threshold).tolist()]
 
         if len(dup_df) > 0:

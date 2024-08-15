@@ -28,6 +28,7 @@ class PretrainEmbedder(Embedder):
         return_format: Literal["list", "np", "pt"] = "list",
         batch_size=16,
         max_length=8192,
+        disable_tqdm: bool = False,
     ) -> Embedder.Response:
 
         texts = request.inputs
@@ -35,8 +36,8 @@ class PretrainEmbedder(Embedder):
         with tqdm(
             total=len(texts),
             desc="Processing",
-            unit="batch" if batch_size > 1 else "it",
             ncols=100,
+            disable=disable_tqdm,
         ) as pbar:
             for i in range(0, len(texts), batch_size):
                 batch = texts[i : i + batch_size]
