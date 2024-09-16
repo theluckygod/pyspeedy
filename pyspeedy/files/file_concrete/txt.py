@@ -1,8 +1,8 @@
 import pandas as pd
 from beartype import beartype
 from beartype.typing import List, Literal, Union
-from loguru import logger
 
+from pyspeedy.common.logging import logger
 from pyspeedy.files.file_concrete.file import File
 
 

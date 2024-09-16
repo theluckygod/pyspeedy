@@ -1,4 +1,4 @@
-from loguru import logger
+from pyspeedy.common.logging import logger
 
 
 def test_config_through_creation():

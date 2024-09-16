@@ -3,7 +3,8 @@ import shutil
 
 import pkg_resources
 from beartype import beartype
-from loguru import logger
+
+from pyspeedy.common.logging import logger
 
 
 @beartype
@@ -46,3 +47,17 @@ def dump_template(
     logger.info(f"Copying '{source_path}' to '{destination_path}'...")
     shutil.copytree(source_path, destination_path, dirs_exist_ok=True)
     logger.info("Done.")
+
+
+# https://stackoverflow.com/questions/15411967/how-can-i-check-if-code-is-executed-in-the-ipython-notebook
+def is_notebook() -> bool:
+    try:
+        shell = get_ipython().__class__.__name__
+        if shell == "ZMQInteractiveShell":
+            return True  # Jupyter notebook or qtconsole
+        elif shell == "TerminalInteractiveShell":
+            return False  # Terminal running IPython
+        else:
+            return False  # Other type (?)
+    except NameError:
+        return False  # Probably standard Python interpreter

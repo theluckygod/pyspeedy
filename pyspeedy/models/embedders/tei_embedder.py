@@ -2,8 +2,8 @@ import numpy as np
 import requests
 import torch
 from beartype.typing import List, Literal
-from tqdm import tqdm
 
+from pyspeedy.common.tqdm import tqdm
 from pyspeedy.models.config import config
 from pyspeedy.models.embedders.embedder import Embedder
 

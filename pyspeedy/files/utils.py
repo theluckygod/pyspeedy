@@ -6,8 +6,8 @@ import dateutil
 import pandas as pd
 from beartype import beartype
 from beartype.typing import Any, Dict, List, Union
-from loguru import logger
 
+from pyspeedy.common.logging import logger
 from pyspeedy.files.file_concrete.file import File
 from pyspeedy.files.file_factory import FileFactory
 

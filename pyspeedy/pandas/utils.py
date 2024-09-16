@@ -4,7 +4,8 @@ from multiprocessing import cpu_count
 from typing import List, Literal
 
 import pandas as pd
-from loguru import logger
+
+from pyspeedy.common.logging import logger
 
 
 def run_parallel(
@@ -62,7 +63,7 @@ def run_parallel(
 if __name__ == "__main__":
     import time
 
-    from tqdm import tqdm
+    from pyspeedy.common.tqdm import tqdm
 
     def map_dataframe_func(df: pd.DataFrame):
         for idx, row in tqdm(df.iterrows(), total=len(df)):

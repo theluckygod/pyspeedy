@@ -2,9 +2,9 @@ import numpy as np
 import torch
 from beartype.typing import List, Literal
 from FlagEmbedding import BGEM3FlagModel
-from loguru import logger
-from tqdm import tqdm
 
+from pyspeedy.common.logging import logger
+from pyspeedy.common.tqdm import tqdm
 from pyspeedy.models.config import config
 from pyspeedy.models.embedders.embedder import Embedder
 
