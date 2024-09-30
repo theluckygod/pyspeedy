@@ -24,3 +24,16 @@ def teen_code_decode(
     result = pattern.sub(lambda m: teen_code_dict[re.escape(m.group(0)).lower()], text)
 
     return result
+
+
+def json_loads_corrector(text: str) -> str:
+    """Correct the string that can not be loaded by json.loads
+
+    Args:
+        text (str): text to be corrected
+
+    Returns:
+        str: corrected text
+    """
+
+    return text.replace("\\n", "n").replace('\\"', '"').replace('\\"', '"')
