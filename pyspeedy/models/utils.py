@@ -55,7 +55,7 @@ def deduplicate_text(
     dup_ids = []
     dup_dict = {}
     for idx, row in tqdm(
-        df.iterrows(), total=len(df), desc="Processing", ncols=100, disable=disable_tqdm
+        df.iterrows(), total=len(df), desc="Processing", disable=disable_tqdm
     ):
         dup_df = df.loc[(df.index > idx) & (scores[idx, ...] >= threshold).tolist()]
 
