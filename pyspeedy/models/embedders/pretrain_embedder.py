@@ -36,7 +36,6 @@ class PretrainEmbedder(Embedder):
         with tqdm(
             total=len(texts),
             desc="Processing",
-            ncols=100,
             disable=disable_tqdm,
         ) as pbar:
             for i in range(0, len(texts), batch_size):

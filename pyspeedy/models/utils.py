@@ -28,7 +28,7 @@ def deduplicate_text(
     Returns:
         Return List[str] if return_duplication is False else Tuple[List[str], Dict]
     """
-    
+
     if embedder is None:
         if config.embedder_endpoint:
             embedder = TEIEmbedder()
@@ -54,7 +54,9 @@ def deduplicate_text(
     logger.info(f"Deduplicating texts with threshold {threshold}")
     dup_ids = []
     dup_dict = {}
-    for idx, row in tqdm(df.iterrows(), total=len(df), desc="Processing", ncols=100, disable=disable_tqdm):
+    for idx, row in tqdm(
+        df.iterrows(), total=len(df), desc="Processing", disable=disable_tqdm
+    ):
         dup_df = df.loc[(df.index > idx) & (scores[idx, ...] >= threshold).tolist()]
 
         if len(dup_df) > 0:
