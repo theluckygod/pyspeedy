@@ -2,6 +2,7 @@ from pyspeedy.files.file_concrete.csv import CSV
 from pyspeedy.files.file_concrete.file import File
 from pyspeedy.files.file_concrete.json import JSON, JSONL
 from pyspeedy.files.file_concrete.txt import TXT
+from pyspeedy.files.file_concrete.xlsx import XLSX
 
 
 class FileFactory:
@@ -12,6 +13,7 @@ class FileFactory:
 
     _handlers = {
         "csv": CSV(),
+        "xlsx": XLSX(),
         "json": JSON(),
         "jsonl": JSONL(),
         "txt": TXT(),
