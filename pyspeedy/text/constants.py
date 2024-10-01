@@ -23,3 +23,16 @@ TEEN_CODE_DICT = {
     "oto": "ô tô",
     "vs": "với",
 }
+
+
+JSON_REPLACE_DICT_CONSOLE_PRINT = {
+    "'": '"',
+    "True": "true",
+    "False": "false",
+    "None": "null",
+}
+
+JSON_REPLACE_DICT_EXCEL = {
+    r"\\\"": '"',
+    r"\\\\n": "\n",
+}
