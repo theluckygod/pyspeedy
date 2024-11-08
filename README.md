@@ -52,6 +52,6 @@ class MySingleton(metaclass=SingletonMeta):
 
 ## Installation
 ```bash
-pip install git+https://github.com/theluckygod/pyspeedy.git
+pip install -e git+https://github.com/theluckygod/pyspeedy.git#egg=pyspeedy
 ```
 
