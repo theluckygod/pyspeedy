@@ -5,7 +5,7 @@ from json import JSONDecodeError
 from beartype.typing import Dict, Union
 
 import pyspeedy.text.constants as constants
-from pyspeedy.common.logging import logger
+import pyspeedy.text.helper_utils as helper_utils
 
 
 def teen_code_decode(
@@ -29,34 +29,6 @@ def teen_code_decode(
     return result
 
 
-def _correct_outside_quotes(text: str, replace_dict: Dict[str, str]) -> str:
-    """Correct the text outside quotes
-
-    Args:
-        text (str): text to be corrected
-        replace_dict (dict[str, str]): replace dictionary
-
-    Returns:
-        str: corrected text
-    """
-
-    for k, v in replace_dict.items():
-        p = re.compile(rf"(?<!\\\\){k}")
-        text = p.sub(v, text)
-
-    return text
-
-
-def _json_loads_format_console_print(text: str) -> str:
-    """Format the text to be printed in console"""
-    return _correct_outside_quotes(text, constants.JSON_REPLACE_DICT_CONSOLE_PRINT)
-
-
-def _json_loads_format_excel(text: str) -> str:
-    """Format the text to be printed in excel"""
-    return _correct_outside_quotes(text, constants.JSON_REPLACE_DICT_EXCEL)
-
-
 def json_loads_corrector(text: str, return_dict: bool = True) -> Union[Dict, str]:
     """Correct the string that can not be loaded by json.loads
 
@@ -70,31 +42,32 @@ def json_loads_corrector(text: str, return_dict: bool = True) -> Union[Dict, str
 
     dict_obj = None
 
-    try:
-        eval_text = re.sub(r"\\*n", r"\\n", text)
-        dict_obj = eval(eval_text)
-        logger.info("Corrected the text with eval method")
-    except Exception as e:
-        logger.warning("Failed to correct the text with eval method")
+    if helper_utils._is_python_dict_format(text):
+        try:
+            dict_obj = eval(text)
+        except Exception as e:
+            pass
 
     if dict_obj is None:
         try:
-            dict_obj = json.loads(_json_loads_format_console_print(text), strict=False)
-            logger.info("Corrected the text with console print format")
+            dict_obj = json.loads(
+                helper_utils._json_loads_format_console_print(text), strict=False
+            )
         except JSONDecodeError:
-            logger.warning("Failed to correct the text with console print format")
+            pass
 
     if dict_obj is None:
         try:
-            dict_obj = json.loads(_json_loads_format_excel(text), strict=False)
-            logger.info("Corrected the text with excel format")
+            dict_obj = json.loads(
+                helper_utils._json_loads_format_excel(text), strict=False
+            )
         except JSONDecodeError:
-            logger.warning("Failed to correct the text with excel format")
+            pass
 
     if dict_obj is None:
         raise JSONDecodeError("Failed to correct the text")
 
     if not return_dict:
-        return json.dumps(text, ensure_ascii=False)
+        return json.dumps(dict_obj, ensure_ascii=False)
 
     return dict_obj
