@@ -34,6 +34,8 @@ JSON_REPLACE_DICT_CONSOLE_PRINT = {
 }
 
 JSON_REPLACE_DICT_EXCEL = {
-    r"\\\"": '"',
     r"\\\\n": "\\n",
+    r"\\n": "\n",
+    r'"': '\\"',
+    r"\'": '"',
 }

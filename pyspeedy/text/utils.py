@@ -41,31 +41,32 @@ def json_loads_corrector(text: str, return_dict: bool = True) -> Union[Dict, str
     """
 
     dict_obj = None
+    error = None
 
     if helper_utils._is_python_dict_format(text):
         try:
             dict_obj = eval(text)
         except Exception as e:
-            pass
+            error = e
 
     if dict_obj is None:
         try:
             dict_obj = json.loads(
                 helper_utils._json_loads_format_console_print(text), strict=False
             )
-        except JSONDecodeError:
-            pass
+        except JSONDecodeError as e:
+            error = e
 
     if dict_obj is None:
         try:
             dict_obj = json.loads(
                 helper_utils._json_loads_format_excel(text), strict=False
             )
-        except JSONDecodeError:
-            pass
+        except JSONDecodeError as e:
+            error = e
 
     if dict_obj is None:
-        raise JSONDecodeError("Failed to correct the text")
+        raise error
 
     if not return_dict:
         return json.dumps(dict_obj, ensure_ascii=False)
