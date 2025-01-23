@@ -26,6 +26,7 @@ TEEN_CODE_DICT = {
 
 
 JSON_REPLACE_DICT_CONSOLE_PRINT = {
+    r"\\\\n": "\\n",
     "'": '"',
     "True": "true",
     "False": "false",
@@ -33,6 +34,8 @@ JSON_REPLACE_DICT_CONSOLE_PRINT = {
 }
 
 JSON_REPLACE_DICT_EXCEL = {
-    r"\\\"": '"',
-    r"\\\\n": "\n",
+    r"\\\\n": "\\n",
+    r"\\n": "\n",
+    r'"': '\\"',
+    r"\'": '"',
 }
